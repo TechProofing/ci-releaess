@@ -2,11 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## v1.0.0
 
 #### Date: 6/18/2024
-
-## [v1.0.0]
 
 ### 🚀 Initial Commit
 
