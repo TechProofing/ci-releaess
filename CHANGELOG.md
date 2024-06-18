@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Initial Commit
 
 - Initial project setup with Node.js v22.3.0, Vite, React, and TypeScript.
+- Vite seems to want a new version of node past 18 to use their new version.
 - Project structure created.
 - Basic dependencies installed and configured.
 
