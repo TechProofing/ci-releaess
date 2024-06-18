@@ -54,7 +54,7 @@ jobs:
 
       - name: Update package versions
         run: |
-          if [ "${{ github.event.inputs.branch }}" == "master" ]; then
+          if [ "${{ github.event.inputs.branch }}" == "main" ]; then
             VERSION=$("./script/next_version.sh")
           else
             VERSION=$("./script/next_version.sh" "${GITHUB_RUN_ID}")

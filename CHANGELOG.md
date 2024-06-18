@@ -28,7 +28,7 @@ All notable changes to this project will be documented in this file.
 - Project versioning handled using `lerna`.
 - **Version Update Script (`./script/next_version.sh`):**
   - Determines the next version based on the current state of the repository.
-  - Differentiates between master and other branches.
+  - Differentiates between main and other branches.
 - **Update Package Versions:**
   - Runs `lerna version` to update package versions without pushing changes immediately.
 
