@@ -1,0 +1,70 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to deploy"
+        required: true
+        default: "staging"
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allows pushing changes to repo
+      issues: write # Allows creating and managing issues
+
+    steps:
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Checkout dev
+        uses: actions/checkout@v4
+
+      - name: Checkout and reset dev branch
+        run: |
+          git checkout dev
+          git reset origin/dev --hard
+
+      - name: Update CHANGELOG
+        run: |
+          CURRENT_DATE="$(date +%-m\/%-d\/%Y)"
+          pwd
+          ls -la
+          sed -i -e "s!#### Date: TBD!#### Date: ${CURRENT_DATE}!g" ./CHANGELOG.md
+
+      - name: Commit CHANGELOG
+        run: |
+          git config --global user.name "YETi DevOps"
+          git config --global user.email "devops+tergar@yeticgi.com"
+          git add ./CHANGELOG.md
+          git commit -m "chore: Update CHANGELOG Date"
+
+      - name: Merge dev into target branch
+        run: |
+          git fetch origin
+          git checkout "${{ github.event.inputs.branch }}" || git checkout -b "${{ github.event.inputs.branch }}" --track "origin/${{ github.event.inputs.branch }}"
+          git reset "origin/${{ github.event.inputs.branch }}" --hard
+          git merge --allow-unrelated-histories -X theirs --no-ff dev
+
+      - name: Update package versions
+        run: |
+          if [ "${{ github.event.inputs.branch }}" == "master" ]; then
+            VERSION=$("./script/next_version.sh")
+          else
+            VERSION=$("./script/next_version.sh" "${GITHUB_RUN_ID}")
+          fi
+          echo "Publishing $VERSION"
+          lerna version "$VERSION" --yes --no-push
+
+      - name: Push changes with tags
+        run: |
+          git push origin --follow-tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: true
