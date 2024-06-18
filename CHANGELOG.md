@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [1.0.0] - 2024-06-18
+## [v1.0.0] - 2024-06-18
 
 ### 🚀 Initial Commit
 
@@ -46,7 +46,7 @@ All notable changes to this project will be documented in this file.
   - Uses `GITHUB_TOKEN` for authentication.
   - Integrates with the custom release script `make-github-release.js`.
 
-## [0.1.0] - 2024-06-15
+## [v0.1.0] - 2024-06-15
 
 ### 🎉 Initial Setup
 
