@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [v1.0.0] - 2024-06-03
+## [v1.0.0] - TBD!####
 
 ### 🚀 Initial Commit
 
