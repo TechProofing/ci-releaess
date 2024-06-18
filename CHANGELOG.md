@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [v1.0.0] - 2024-06-18
+#### Date: 6/18/2024
+
+## [v1.0.0]
 
 ### 🚀 Initial Commit
 
 - Initial project setup with Node.js v22.3.0, Vite, React, and TypeScript.
+- Vite seems to want a new version of node past 18 to use their new version.
 - Project structure created.
 - Basic dependencies installed and configured.
 
