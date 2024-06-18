@@ -50,7 +50,7 @@ jobs:
           git fetch origin
           git checkout "${{ github.event.inputs.branch }}" || git checkout -b "${{ github.event.inputs.branch }}" --track "origin/${{ github.event.inputs.branch }}"
           git reset "origin/${{ github.event.inputs.branch }}" --hard
-          git merge -X theirs --no-ff dev
+          git merge --allow-unrelated-histories -X theirs --no-ff dev
 
       - name: Update package versions
         run: |
