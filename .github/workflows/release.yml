@@ -2,7 +2,7 @@ name: Release
 
 on:
   repository_dispatch:
-    types: [release-trigger]
+    types: [release-main, release-staging]
   push:
     branches:
       - main
@@ -16,29 +16,44 @@ jobs:
     env:
       CI: true
     steps:
-      - name: GIT Fetch Tags
-        uses: actions/checkout@v4
+      - name: Determine Branch
+        id: determine-branch
+        run: |
+          if [ "${{ github.event.action }}" == "release-main" ]; then
+            echo "::set-output name=branch::main"
+          elif [ "${{ github.event.action }}" == "release-staging" ]; then
+            echo "::set-output name=branch::staging"
+          else
+            echo "Unknown event action"
+            exit 1
 
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
-          fetch-depth: "0"
-          fetch-tags: "true"
+          ref: ${{ steps.determine-branch.outputs.branch }}
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: "https://registry.npmjs.org"
+
       - name: NPM Install
         run: |
           npm install
+
       - name: Find Version
         run: |
           echo "GIT_TAG=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+
       - name: Make GitHub Release
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           CHANGELOG=$(./script/most_recent_changelog.sh)
           node .script/make-github-release/bin/make-github-release.js release --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --text "${CHANGELOG}" --auth "${{ secrets.GITHUB_TOKEN }}"
+
       - name: Build
         run: |
           npm run build
