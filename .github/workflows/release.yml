@@ -20,9 +20,9 @@ jobs:
         id: determine-branch
         run: |
           if [ "${{ github.event.action }}" == "release-main" ]; then
-            echo "::set-output name=branch::main"
+            echo "branch=main" >> $GITHUB_ENV
           elif [ "${{ github.event.action }}" == "release-staging" ]; then
-            echo "::set-output name=branch::staging"
+            echo "branch=staging" >> $GITHUB_ENV
           else
             echo "Unknown event action"
             exit 1
@@ -30,7 +30,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.determine-branch.outputs.branch }}
+          ref: ${{ env.branch }}
           fetch-depth: 0
           fetch-tags: true
 
