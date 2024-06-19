@@ -20,7 +20,7 @@ jobs:
       - name: GIT checkout
         if: ${{ github.ref == 'refs/heads/dev' }}
         run: |
-          git checkout main
+          git checkout -b main
           git fetch --tags
 
       - name: Use Node.js 20.x
