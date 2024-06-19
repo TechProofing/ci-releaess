@@ -17,6 +17,12 @@ jobs:
       CI: true
     steps:
       - uses: actions/checkout@v4
+      - name: GIT checkout
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          git checkout main
+          git fetch --tags
+
       - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
