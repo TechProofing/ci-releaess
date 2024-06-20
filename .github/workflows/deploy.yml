@@ -74,7 +74,8 @@ jobs:
             github.rest.repos.createDispatchEvent({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              event_type: 'release-${{ github.event.inputs.branch }}',
+              event_type: 'Release'
+              client_payload: `{ "ref": "refs/head/${{ github.event.inputs.branch }}"',
             });
 
         env:

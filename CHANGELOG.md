@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## v1.0.3
 
-#### Date: 6/19/2024
+#### Date: 6/20/2024
 
 ### 🚀 Initial Commit
 
