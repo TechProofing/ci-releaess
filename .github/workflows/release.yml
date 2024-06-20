@@ -2,7 +2,7 @@ name: Release
 
 on:
   repository_dispatch:
-    types: [release-main, release-staging]
+    types: [Release]
   push:
     branches:
       - main
@@ -16,23 +16,10 @@ jobs:
     env:
       CI: true
     steps:
-      - name: Determine Branch
-        id: determine-branch
-        run: |
-          if [ "${{ github.event.action }}" == "release-main" ]; then
-            echo "branch=main" >> $GITHUB_ENV
-          elif [ "${{ github.event.action }}" == "release-staging" ]; then
-            echo "branch=staging" >> $GITHUB_ENV
-          else
-            echo "Unknown event action"
-            exit 1
-
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: ${{ env.branch }}
-          fetch-depth: 0
-          fetch-tags: true
+          ref: ${{ github.event.client_payload.ref }}
 
       - name: Use Node.js 20.x
         uses: actions/setup-node@v4
