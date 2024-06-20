@@ -71,11 +71,11 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            github.rest.repos.createDispatchEvent({
+            github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              event_type: 'Release'
-              ref: 'ref/head/${{ github.event.inputs.branch }},
+              workflow_id: 'release.yml'
+              ref: '${{ github.event.inputs.branch }}',
             });
 
         env:
