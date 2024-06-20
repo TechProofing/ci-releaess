@@ -15,6 +15,7 @@ jobs:
     permissions:
       contents: write # Allows pushing changes to repo
       issues: write # Allows creating and managing issues
+      actions: write # Allows triggering actions
 
     steps:
       - name: Use Node.js 20.x
