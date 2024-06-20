@@ -75,7 +75,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               event_type: 'Release'
-              client_payload: `{ "ref": "refs/head/${{ github.event.inputs.branch }}"',
+              ref: 'ref/head/${{ github.event.inputs.branch }},
             });
 
         env:
