@@ -2,7 +2,7 @@ name: Release
 
 on:
   workflow_dispatch:
-  
+
   push:
     branches:
       - main
@@ -37,7 +37,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           CHANGELOG=$(./script/most_recent_changelog.sh)
-          node .script/make-github-release/bin/make-github-release.js release --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --text "${CHANGELOG}" --auth "${{ secrets.GITHUB_TOKEN }}"
+          node script/make-github-release/bin/make-github-release.js release --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --text "${CHANGELOG}" --auth "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Build
         run: |
